@@ -33,8 +33,6 @@ public class RpcServer implements ApplicationContextAware, InitializingBean
     private Map<String, Object> handlerMap = new HashMap<>();
 
     @Autowired
-    Configuration configuration;
-    @Autowired
     ZkServiceRegistry zkServiceRegistry;
     @Value("${rpc.port}")
     private int port;
@@ -48,7 +46,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean
             for (Object bean : beanMap.values())
             {
                 RpcService rpcService = bean.getClass().getAnnotation(RpcService.class);
-                String serviceName = rpcService.value().getName();
+                String serviceName = rpcService.value().getSimpleName();
                 handlerMap.put(serviceName, bean);
             }
         }
